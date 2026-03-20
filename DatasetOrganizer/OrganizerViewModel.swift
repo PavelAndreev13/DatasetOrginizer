@@ -14,7 +14,13 @@ class OrganizerViewModel {
     var progress: Double = 0.0
     var totalFiles: Double = 0.0
     var copyMode: Bool = false
+    var showOpenFolder: Bool = false
     
+    func openDestinationFolder() {
+        guard let url = destURL else { return }
+        NSWorkspace.shared.open(url)
+    }
+
     func selectSourceFolder() {
         if let url = selectFolder() {
             sourceURL = url
@@ -45,6 +51,7 @@ class OrganizerViewModel {
         }
 
         isProcessing = true
+        showOpenFolder = false
         statusMessage = "Analyzing files..."
         progress = 0.0
 
@@ -143,6 +150,7 @@ class OrganizerViewModel {
             await MainActor.run {
                 self.statusMessage = "Success! \(action) (.\(cleanExtension)): \(processedCount) files"
                 self.isProcessing = false
+                self.showOpenFolder = true
             }
         }
     }

@@ -40,7 +40,6 @@ struct ContentView: View {
 
     var body: some View {
         ZStack {
-            // Background with a subtle gradient matching SwiftyForge brand feel
             LinearGradient(
                 colors: [Color.blue.opacity(0.1), Color.black.opacity(0.05)],
                 startPoint: .topLeading,
@@ -49,7 +48,6 @@ struct ContentView: View {
             .ignoresSafeArea()
 
             VStack(spacing: 24) {
-                // Centered Logo
                 Image("SwiftyForge")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -136,12 +134,20 @@ struct ContentView: View {
                     .foregroundStyle(viewModel.isProcessing ? .orange : .green)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
+
+                if viewModel.showOpenFolder {
+                    Button(action: viewModel.openDestinationFolder) {
+                        Label("Open Dataset Folder", systemImage: "folder")
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .controlSize(.large)
+                }
             }
             .padding(32)
-        .frame(minWidth: 500, minHeight: 600)
-        .onAppear {
-            print("ContentView Appeared")
-        }
+            .frame(minWidth: 500, minHeight: 600)
+            .onAppear {
+                print("ContentView Appeared")
+            }
         }
         .background(
             Gradient(colors: [.topBackground, .bottomBackground]))
